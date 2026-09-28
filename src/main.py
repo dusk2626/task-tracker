@@ -5,6 +5,26 @@ Bootcamp II - Engenharia de Software | Fase 2 (Entrega Intermediária)
 
 tarefas = []
 
+PRIORIDADES_VALIDAS = ("Alta", "Média", "Media", "Baixa")
+
+
+def ler_titulo_valido():
+    """Solicita o título até que um valor não vazio (após strip) seja informado."""
+    while True:
+        titulo = input("Título: ").strip()
+        if titulo:
+            return titulo
+        print("Erro: o título não pode ser vazio. Digite um título válido.")
+
+
+def ler_prioridade_valida():
+    """Solicita a prioridade até que uma das opções válidas seja informada."""
+    while True:
+        prioridade = input("Prioridade (Alta/Média/Baixa): ").strip()
+        if prioridade in PRIORIDADES_VALIDAS:
+            return prioridade
+        print("Erro: prioridade inválida! Use apenas: Alta, Média (ou Media) ou Baixa.")
+
 
 def exibir_menu():
     print("\n===== TASKTRACKER =====")
@@ -16,10 +36,10 @@ def exibir_menu():
 
 def cadastrar_tarefa():
     print("\n--- Nova tarefa ---")
-    titulo = input("Título: ")
-    descricao = input("Descrição: ")
-    prioridade = input("Prioridade (Alta/Média/Baixa): ")
-    data_limite = input("Data limite (DD/MM/AAAA): ")
+    titulo = ler_titulo_valido()
+    descricao = input("Descrição: ").strip()
+    prioridade = ler_prioridade_valida()
+    data_limite = input("Data limite (DD/MM/AAAA): ").strip()
 
     tarefa = {
         "titulo": titulo,
