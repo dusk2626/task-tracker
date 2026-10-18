@@ -2,7 +2,7 @@
 
 Aplicação de linha de comando (CLI) desenvolvida em Python 3 para gerenciar tarefas pessoais: cadastro, listagem e acompanhamento de status, prioridade e data limite.
 
-Projeto do **Bootcamp II — Engenharia de Software**, Fase 2 (Entrega Intermediária).
+Projeto do **Bootcamp II — Engenharia de Software**, Fase 3 (Entrega Final — Conteinerização, Orquestração e Deploy).
 
 ## Descrição Funcional
 
@@ -30,13 +30,16 @@ tasktracker-projeto/
 ├── .gitignore                     # Regras de ignore para Python
 ├── docs/
 │   └── planejamento_logico.pdf    # Planejamento lógico da Fase 1
-└── src/
-    └── main.py                    # Código-fonte da aplicação
+├── src/
+│   └── main.py                    # Código-fonte da aplicação
+├── Dockerfile                     # Receita de build da imagem (Fase 3)
+└── docker-compose.yml             # Orquestração interativa (Fase 3)
 ```
 
 ## Tecnologias
 
-- **Python 3** (testado na versão 3.8+)
+- **Python 3** (imagem base `python:3.11-slim`)
+- **Docker** — containerização e orquestração
 - **Git / GitHub** — versionamento e publicação
 - Bibliotecas padrão da linguagem (nenhuma dependência externa)
 
@@ -61,6 +64,32 @@ python src/main.py
 ```
 
 Não há dependências externas para instalar — o projeto usa apenas a biblioteca padrão.
+
+## Rodando com Docker (Recomendado)
+
+Requisitos: [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e em execução.
+
+### 1. Como construir a imagem
+
+```bash
+docker build -t tasktracker .
+```
+
+### 2. Como rodar o container em modo interativo
+
+```bash
+docker run -it tasktracker
+```
+
+### 3. Como rodar via orquestração (Recomendado)
+
+```bash
+docker compose run --rm tasktracker-app
+```
+
+> O `docker-compose.yml` configura `stdin_open: true` e `tty: true` para que a CLI
+> receba os inputs do terminal dentro do container — sem isso, o `input()` ficaria
+> bloqueado pelo isolamento do container.
 
 ## Exemplo de Uso
 
@@ -89,15 +118,17 @@ Escolha uma opção: 2
 
 ## Versionamento
 
-O histórico do repositório segue a evolução exigida pela Fase 2:
+O histórico do repositório documenta a evolução cumulativa do projeto:
+
+**Fase 2 — Entrega Intermediária**
 
 1. Inicialização do projeto e estrutura de pastas
 2. Commit inicial (README, `.gitignore` e documento da Fase 1)
 3. Estrutura principal da aplicação (menu e loop)
 4. Funções de validação (título não vazio e prioridades)
 
-## Fase 3 (Próximos Passos)
+**Fase 3 — Entrega Final**
 
-- Empacotamento da aplicação
-- Containerização com Docker
-- Testes automatizados e deploy
+5. `Dockerfile` — imagem leve e autossuficiente da aplicação
+6. `docker-compose.yml` — orquestração com terminal interativo
+7. README atualizado com o guia Docker (`build`, `run -it`, `compose run`)
